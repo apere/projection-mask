@@ -3,6 +3,13 @@
 //
 // find_points - click to find the x-y coordinates for
 // mapping x-y coordinates to mask screens
+//
+// maxPoints sets the number of points for each shape
+//
+// Click to choose a point, every time maxPoint # of mouse clicks, the shape
+// will be written to the screen and points written to the file.
+//
+// enter to write all points to a txt file & close program.
 
 ArrayList<PVector> points;
 int numPoints;
