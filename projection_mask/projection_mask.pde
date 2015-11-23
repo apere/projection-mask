@@ -2,8 +2,11 @@
 // november.2015
 
 import processing.serial.*;
+import processing.video.*;
 
 Serial port;   
+
+Movie vid;
 
 int rawPulse;
 int IBI; // time between heart beats
@@ -14,8 +17,9 @@ int heart = 10;
 Mask m;
 
 void setup() {
-  size(600, 400, P3D);
+  size(800, 400, P3D);
   //fullscreen();
+  pixelDensity(displayDensity());
   
   //port = new Serial(this, Serial.list()[5], 115200); 
   //port.clear(); // flush buffer
@@ -23,11 +27,14 @@ void setup() {
   
   m = new Mask(7);
   frameRate(30);
+  
+  vid = new Movie(this, "4loop.mp4");
+  vid.loop();
 }
 
 void draw() {
   background(0);
-  m.render(heart);
+  m.render(vid, heart);
   
   if(heart > 0) { 
     heart--; // usefull for pulse animation
@@ -37,10 +44,14 @@ void draw() {
   
   
   // text useful for debugging
-  text("Framerate: " + int(frameRate),90,height-10);
+  text("Framerate: " + int(frameRate),120,height-10);
   fill(255);
   if(heart == 20) {
      fill(255, 20, 90); 
   }
   text("BPM: " + BPM, 10, height - 10);
 }
+
+void movieEvent(Movie m) { 
+  m.read(); 
+} 

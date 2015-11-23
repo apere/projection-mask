@@ -8,22 +8,21 @@ class Screen {
   PVector center;
   int numPoints;
   int mode;
-  int animateFrames;
+  int r= 60;
   
-  
-  Screen(int m, PVector p, int nPoints, int numFrames) {
+  Screen(int m, PVector p, int nPoints) {
     mode = m;
     center = p;
     numPoints = nPoints;
-    animateFrames = numFrames;
   }
   
-  void animate(int currFrame) {
-    float scale = map(currFrame, 0, 20, 1, 5);
+  void animate(int count, Movie vid, int heart) {
     beginShape();
-      vertex(center.x - 20*scale, 20*scale, 20*scale);
-      vertex(center.x + 20*scale, 20, center.z);
-      vertex(center.x, center.y - 20*scale, center.z);
+      texture(vid);
+      vertex(center.x - r, center.y - r, center.z + r, 0, 0);
+      vertex(center.x + r, center.y - r, center.z + r, 4*r, 0);
+      vertex(center.x + r, center.y + r, center.z - r, 4*r, 4*r);
+      vertex(center.x - r, center.y + r, center.z- r, 0, 4*r);
     endShape();
   }
 }

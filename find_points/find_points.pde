@@ -9,16 +9,18 @@ int numPoints = 0;
 int maxPoints = 4;
 
 void setup() {
-  fullScreen();
+  fullScreen(P3D);
   background(0);
+  pixelDensity(displayDensity());
   
   points = new ArrayList<PVector>();
   noStroke();
-  smooth();
+  smooth(8);
 }
 
 
 void draw() {
+  background(0);
   if(numPoints == maxPoints) {
      beginShape();
        for(int i = 0; i < numPoints; i++) {
@@ -26,6 +28,17 @@ void draw() {
        }
      endShape();
   }
+  
+  fill(255);
+  noStroke();
+  triangle(mouseX, mouseY, mouseX - 20, mouseY + 50, mouseX + 20, mouseY + 50);
+  
+  noFill();
+  stroke(255);
+  ellipse(mouseX, mouseY, 40, 40);
+  
+  fill(255);
+  noStroke();
 }
 
 void mousePressed() {

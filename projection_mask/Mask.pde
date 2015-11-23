@@ -9,14 +9,16 @@ class Mask {
    Mask(int numScreens) {
      screens = new ArrayList<Screen>();
      
-     for(int i = 1; i <= numScreens; i++) {
-       screens.add(new Screen(1, new PVector(i*20, i*20, 0), 3, 20));
+     for(int i = 0; i < numScreens; i++) {
+       screens.add(new Screen(1, new PVector(i*140, 200, 0), 4));
      }
    }
    
-   void render(int n) {
+   void render(Movie vid, int heart) {
+     int count = 1;
      for(Screen screen : screens) {
-       screen.animate(n);
+       screen.animate(count, vid, heart);
+       count++;
      }
    }
 }
