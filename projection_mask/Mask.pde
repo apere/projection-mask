@@ -10,7 +10,7 @@ class Mask {
      screens = new ArrayList<Screen>();
      
      for(int i = 0; i < numScreens; i++) {
-       screens.add(new Screen(1, new PVector(i*140, 200, 0), 4));
+       screens.add(new Screen(new PVector(i*140, 200, 0), 4));
      }
    }
    

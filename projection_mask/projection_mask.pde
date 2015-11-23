@@ -21,9 +21,9 @@ void setup() {
   //fullscreen();
   pixelDensity(displayDensity());
   
-  //port = new Serial(this, Serial.list()[5], 115200); 
-  //port.clear(); // flush buffer
-  //port.bufferUntil('\n'); 
+  port = new Serial(this, Serial.list()[5], 115200); 
+  port.clear(); // flush buffer
+  port.bufferUntil('\n'); 
   
   m = new Mask(7);
   frameRate(30);
@@ -50,6 +50,7 @@ void draw() {
      fill(255, 20, 90); 
   }
   text("BPM: " + BPM, 10, height - 10);
+  text("h: " + heart, 300, height-10);
 }
 
 void movieEvent(Movie m) { 

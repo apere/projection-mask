@@ -5,17 +5,25 @@
 // mapping x-y coordinates to mask screens
 
 ArrayList<PVector> points;
-int numPoints = 0;
-int maxPoints = 4;
+int numPoints;
+int maxPoints;
+String output;
+PrintWriter printer;
 
 void setup() {
   fullScreen(P3D);
   background(0);
   pixelDensity(displayDensity());
-  
-  points = new ArrayList<PVector>();
-  noStroke();
   smooth(8);
+  noStroke();
+  
+  
+  output = "";
+  printer = createWriter("mapped_points.txt"); 
+  
+  numPoints = 0;
+  maxPoints = 4;
+  points = new ArrayList<PVector>();
 }
 
 
@@ -44,13 +52,26 @@ void draw() {
 void mousePressed() {
    int x = mouseX;
    int y = mouseY;
-   println("new PVector(" + x + ", " + y + ", 0)");
+  
    
    if (numPoints >= maxPoints) {
+     for(int i = 0; i < numPoints; i++) {
+       println("new PVector(" + points.get(i).x + ", " + points.get(i).y + ", 0)");
+       printer.println("new PVector(" + points.get(i).x + ", " + points.get(i).y + ", 0)");
+     }
+     printer.println("---");
      println("---");
      points.clear();
      numPoints = 0;
    }
    points.add(new PVector(x, y)); 
    numPoints++;
+}
+
+void keyPressed() {
+ if(key == ENTER || key == RETURN) {
+   printer.flush();
+   printer.close();
+   exit();
+ }
 }
