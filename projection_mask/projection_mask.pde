@@ -17,15 +17,14 @@ int heart = 10;
 Mask m;
 
 void setup() {
-  size(800, 400, P3D);
-  //fullscreen();
+  fullScreen(P3D);
   pixelDensity(displayDensity());
   
-  port = new Serial(this, Serial.list()[5], 115200); 
-  port.clear(); // flush buffer
-  port.bufferUntil('\n'); 
+  //port = new Serial(this, Serial.list()[5], 115200); 
+  //port.clear(); // flush buffer
+  //port.bufferUntil('\n'); 
   
-  m = new Mask(7);
+  m = new Mask(12);
   frameRate(30);
   
   vid = new Movie(this, "4loop.mp4");

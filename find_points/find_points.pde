@@ -37,6 +37,7 @@ void setup() {
 void draw() {
   background(0);
   if(numPoints == maxPoints) {
+     fill(200, 200, 10);
      beginShape();
        for(int i = 0; i < numPoints; i++) {
           vertex(points.get(i).x, points.get(i).y); 
