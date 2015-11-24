@@ -1,5 +1,9 @@
 // author: adam m pere
 // november.2015
+//
+// Arduino:
+// Pulse Sensor: A0
+// Wind Sensor: A1
 
 import processing.serial.*;
 import processing.video.*;
@@ -32,13 +36,7 @@ void setup() {
 void draw() {
   background(0);
   m.render(vid, heart);
-  
-  if(heart > 0) { 
-    heart--; // usefull for pulse animation
-  } else {
-     heart = 20; 
-  }
-  
+   
   
   // text useful for debugging
   text("Framerate: " + int(frameRate),120,height-10);
@@ -48,6 +46,14 @@ void draw() {
   }
   text("BPM: " + BPM, 10, height - 10);
   text("h: " + heart, 300, height-10);
+  
+  text("W: " + windSpeed, 375, height - 10);
+  text("T: " + windTemp, 450, height - 10);
+  text("Z: " + windVolts, 525, height - 10);
+  
+  if(heart > 0) { 
+    heart--; // usefull for pulse animation
+  }
 }
 
 void movieEvent(Movie m) { 
