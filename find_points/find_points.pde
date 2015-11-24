@@ -27,6 +27,7 @@ void setup() {
   
   output = "";
   printer = createWriter("mapped_points.txt"); 
+  printer.println("{");
   
   numPoints = 0;
   maxPoints = 4;
@@ -65,7 +66,7 @@ void mousePressed() {
    if (numPoints >= maxPoints) {
      for(int i = 0; i < numPoints; i++) {
        println("new PVector(" + points.get(i).x + ", " + points.get(i).y + ", 0)");
-       printer.println("new PVector(" + points.get(i).x + ", " + points.get(i).y + ", 0)");
+       printer.println("new PVector(" + points.get(i).x + ", " + points.get(i).y + ", 0),");
      }
      printer.println("---");
      println("---");
@@ -78,6 +79,7 @@ void mousePressed() {
 
 void keyPressed() {
  if(key == ENTER || key == RETURN) {
+   printer.println("};");
    printer.flush();
    printer.close();
    exit();

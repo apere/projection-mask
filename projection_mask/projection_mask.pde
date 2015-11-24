@@ -20,14 +20,14 @@ void setup() {
   fullScreen(P3D);
   pixelDensity(displayDensity());
   
-  //port = new Serial(this, Serial.list()[5], 115200); 
-  //port.clear(); // flush buffer
-  //port.bufferUntil('\n'); 
+  port = new Serial(this, Serial.list()[5], 115200); 
+  port.clear(); // flush buffer
+  port.bufferUntil('\n'); 
   
   m = new Mask(12);
   frameRate(30);
   
-  vid = new Movie(this, "4loop.mp4");
+  vid = new Movie(this, "5loop.mp4");
   vid.loop();
 }
 
