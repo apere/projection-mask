@@ -24,7 +24,7 @@ void setup() {
   port.clear(); // flush buffer
   port.bufferUntil('\n'); 
   
-  m = new Mask(12);
+  m = new Mask();
   frameRate(30);
   
   vid = new Movie(this, "5loop.mp4");

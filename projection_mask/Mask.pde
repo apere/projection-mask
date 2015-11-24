@@ -7,7 +7,7 @@ class Mask {
    ArrayList<Screen> screens;
    PVector[] points;
    
-   Mask(int numScreens) {
+   Mask() {
      screens = new ArrayList<Screen>();
      points=new PVector[] {
       new PVector(886.0, 218.0, 0),
@@ -59,14 +59,15 @@ class Mask {
       new PVector(740.0, 587.0, 0),
       new PVector(674.0, 604.0, 0)
      };
+     
      PVector[] temp = new PVector[4];
+     
      for(int i = 0; i < points.length; i++) {
        if(i%4 == 0 && i != 0) {
          screens.add(new Screen(4,temp));
          temp = new PVector[4];
        }
        temp[i%4] = points[i];
-       
      }
    
    }
