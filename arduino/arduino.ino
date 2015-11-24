@@ -61,8 +61,6 @@ volatile boolean QS = false;        // becomes true when Arduoino finds a beat.
 
 
 void setup(){
-  pinMode(blinkPin,OUTPUT);         // pin that will blink to your heartbeat!
-  pinMode(fadePin,OUTPUT);          // pin that will fade to your heartbeat!
   Serial.begin(115200);             // we agree to talk fast!
   interruptSetup();                 // sets up to read Pulse Sensor signal every 2mS 
    // UN-COMMENT THE NEXT LINE IF YOU ARE POWERING The Pulse Sensor AT LOW VOLTAGE, 
@@ -81,46 +79,35 @@ void loop(){
         QS = false;                      // reset the Quantified Self flag for next time    
      }
   // Wind Sensor
-  if (millis() - lastMillis > 200){      // read every 200 ms - printing slows this down further
-    
-    TMP_Therm_ADunits = analogRead(analogPinForTMP);
-    RV_Wind_ADunits = analogRead(analogPinForRV);
-    RV_Wind_Volts = (RV_Wind_ADunits *  0.0048828125);
+//  if (millis() - lastMillis > 200){      // read every 200 ms - printing slows this down further
+//    
+//    TMP_Therm_ADunits = analogRead(analogPinForTMP);
+//    RV_Wind_ADunits = analogRead(analogPinForRV);
+//    RV_Wind_Volts = (RV_Wind_ADunits *  0.0048828125);
+//
+//    // these are all derived from regressions from raw data as such they depend on a lot of experimental factors
+//    // such as accuracy of temp sensors, and voltage at the actual wind sensor, (wire losses) which were unaccouted for.
+//    TempCtimes100 = (0.005 *((float)TMP_Therm_ADunits * (float)TMP_Therm_ADunits)) - (16.862 * (float)TMP_Therm_ADunits) + 9075.4;  
+//
+//    zeroWind_ADunits = -0.0006*((float)TMP_Therm_ADunits * (float)TMP_Therm_ADunits) + 1.0727 * (float)TMP_Therm_ADunits + 47.172;  //  13.0C  553  482.39
+//
+//    zeroWind_volts = (zeroWind_ADunits * 0.0048828125) - zeroWindAdjustment;  
+//
+//    // This from a regression from data in the form of 
+//    // Vraw = V0 + b * WindSpeed ^ c
+//    // V0 is zero wind at a particular temperature
+//    // The constants b and c were determined by some Excel wrangling with the solver.
+//    
+//    WindSpeed_MPH =  pow(((RV_Wind_Volts - zeroWind_volts) /.2300) , 2.7265);   
+//
+//    sendDataToProcessing('T', TempCtimes100);
+//    sendDataToProcessing('Z', zeroWind_volts);
+//    sendDataToProcessing('W', (float)WindSpeed_MPH);
+//
+//    lastMillis = millis();    
+//  }
 
-    // these are all derived from regressions from raw data as such they depend on a lot of experimental factors
-    // such as accuracy of temp sensors, and voltage at the actual wind sensor, (wire losses) which were unaccouted for.
-    TempCtimes100 = (0.005 *((float)TMP_Therm_ADunits * (float)TMP_Therm_ADunits)) - (16.862 * (float)TMP_Therm_ADunits) + 9075.4;  
-
-    zeroWind_ADunits = -0.0006*((float)TMP_Therm_ADunits * (float)TMP_Therm_ADunits) + 1.0727 * (float)TMP_Therm_ADunits + 47.172;  //  13.0C  553  482.39
-
-    zeroWind_volts = (zeroWind_ADunits * 0.0048828125) - zeroWindAdjustment;  
-
-    // This from a regression from data in the form of 
-    // Vraw = V0 + b * WindSpeed ^ c
-    // V0 is zero wind at a particular temperature
-    // The constants b and c were determined by some Excel wrangling with the solver.
-    
-    WindSpeed_MPH =  pow(((RV_Wind_Volts - zeroWind_volts) /.2300) , 2.7265);   
-
-    sendDataToProcessing('T', TempCtimes100);
-    sendDataToProcessing('Z', zeroWind_volts);
-    sendDataToProcessing('W', (float)WindSpeed_MPH);
-
-    lastMillis = millis();    
-  }
-  
-  ledFadeToBeat();
-  
-  delay(20);                             //  take a break
 }
-
-
-void ledFadeToBeat(){
-    fadeRate -= 15;                         //  set LED fade value
-    fadeRate = constrain(fadeRate,0,255);   //  keep LED fade value from going into negative numbers!
-    analogWrite(fadePin,fadeRate);          //  fade LED
-  }
-
 
 void sendDataToProcessing(char symbol, int data ){
     Serial.print(symbol);                // symbol prefix tells Processing what type of data is coming

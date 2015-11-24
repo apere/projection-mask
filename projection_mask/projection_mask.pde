@@ -8,11 +8,9 @@ Serial port;
 
 Movie vid;
 
-int rawPulse;
-int IBI; // time between heart beats
-int BPM; 
+int rawPulse, IBI, BPM, heart = 10; // IBI - time between heart beats
 boolean beat = false;  
-int heart = 10; 
+float windTemp, windVolts, windSpeed;
 
 Mask m;
 
