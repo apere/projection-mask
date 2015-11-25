@@ -39,28 +39,26 @@ class Screen {
     float[] texX = {0, 4*r, 4*r, 0};
     float[] texY = {0, 0, 4*r, 4*r};
     
-      
-      switch(mode) {
-        case(0):
-          beginShape();
-            texture(vid);
-            //tint(lerpColor(from, to, ratio));
-            vertex(center.x - r, center.y - r, center.z + r, 0, 0);
-            vertex(center.x + r, center.y - r, center.z + r, 4*r*scale, 0);
-            vertex(center.x + r, center.y + r, center.z - r, 4*r*scale, 4*r*scale);
-            vertex(center.x - r, center.y + r, center.z- r, 0, 4*r*scale);
-          endShape();
-          break;
-         case(1):
-           beginShape();
-             texture(vid);
-             //tint(lerpColor(from, to, ratio));
-             for(int i = 0; i < numPoints; i++) {
-               vertex(allPoints.get(i).x, allPoints.get(i).y, allPoints.get(i).z, texX[i%4], texY[i%4]); 
-             }
-           endShape();
-           break;
-      }
-     
+    switch(mode) {
+      case(0):
+        beginShape();
+          texture(vid);
+          //tint(lerpColor(from, to, ratio));
+          vertex(center.x - r, center.y - r, center.z + r, 0, 0);
+          vertex(center.x + r, center.y - r, center.z + r, 4*r*scale, 0);
+          vertex(center.x + r, center.y + r, center.z - r, 4*r*scale, 4*r*scale);
+          vertex(center.x - r, center.y + r, center.z- r, 0, 4*r*scale);
+        endShape();
+        break;
+       case(1):
+         beginShape();
+           texture(vid);
+           //tint(lerpColor(from, to, ratio));
+           for(int i = 0; i < numPoints; i++) {
+             vertex(allPoints.get(i).x, allPoints.get(i).y, allPoints.get(i).z, texX[i%4], texY[i%4]); 
+           }
+         endShape();
+         break;
+    }
   }
 }

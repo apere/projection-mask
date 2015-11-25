@@ -4,7 +4,6 @@
 // Arduino:
 // Pulse Sensor: A0
 // Wind Sensor: A1
-
 import processing.serial.*;
 import processing.video.*;
 
@@ -24,6 +23,7 @@ void setup() {
   fullScreen(P3D);
   pixelDensity(displayDensity());
   
+  // comment out for testing w/o sensor input
   //port = new Serial(this, Serial.list()[5], 115200); 
   //port.clear(); // flush buffer
   //port.bufferUntil('\n'); 
