@@ -16,6 +16,13 @@ int numPoints;
 int maxPoints;
 String output;
 PrintWriter printer;
+int numShapes;
+
+// Keep track of which screen we're drawing by having a list of 'screens'
+// click on shape to hide all others, click again to revert
+// modes: enter number of points, click for shapes, etc
+//(change that word shape to screen... this is for a specific task)
+
 
 void setup() {
   fullScreen(P3D);
@@ -26,9 +33,10 @@ void setup() {
   
   
   output = "";
-  printer = createWriter("mapped_points.txt"); 
-  printer.println("{");
+  printer = createWriter("mapped_points.json"); 
+  printer.println("[");
   
+  numShapes = 0;
   numPoints = 0;
   maxPoints = 4;
   points = new ArrayList<PVector>();
@@ -64,14 +72,31 @@ void mousePressed() {
   
    
    if (numPoints >= maxPoints) {
-     for(int i = 0; i < numPoints; i++) {
-       println("new PVector(" + points.get(i).x + ", " + points.get(i).y + ", 0)");
-       printer.println("new PVector(" + points.get(i).x + ", " + points.get(i).y + ", 0),");
+     if(numShapes > 0) {
+       printer.print(",");
      }
-     printer.println("---");
-     println("---");
+     
+     printer.println("  {");
+     printer.println("    \"screen\" : " + numShapes + ",");
+     printer.println("    \"numberOfPoints\" : " + points.size() + ",");
+     printer.println("    \"points\" : [");
+     for(int i = 0; i < numPoints; i++) {
+       printer.println("      {");
+       printer.println("        \"x\" : " + points.get(i).x + ",");
+       printer.println("        \"y\" : " + points.get(i).y + ",");
+       printer.println("        \"z\" : 0");
+       
+       if(i < numPoints - 1) {
+         printer.println("      },");
+       } else {
+         printer.println("      }");
+       }
+     }
+     printer.println("    ]");
+     printer.println("  }");
      points.clear();
      numPoints = 0;
+     numShapes++;
    }
    points.add(new PVector(x, y)); 
    numPoints++;
@@ -79,7 +104,7 @@ void mousePressed() {
 
 void keyPressed() {
  if(key == ENTER || key == RETURN) {
-   printer.println("};");
+   printer.println("]");
    printer.flush();
    printer.close();
    exit();
