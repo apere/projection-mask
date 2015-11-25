@@ -6,13 +6,12 @@
 
 class Screen {
   PVector center;
-  PVector[] allPoints;
-  int numPoints;
-  int mode;
-  int r= 60;
+  ArrayList<PVector> allPoints;
+  int r, numPoints, mode, id;
   color from, to;
   
   Screen(PVector p, int nPoints) {
+    r = 60;
     center = p;
     numPoints = nPoints;
     
@@ -22,9 +21,11 @@ class Screen {
     mode = 0; // center points given
   }
   
-  Screen(int nPoints, PVector[] points) {
+  Screen(int screenID,  ArrayList<PVector> points) {
+    r = 60;
     allPoints = points;
-    numPoints = nPoints;
+    numPoints = points.size();
+    id = screenID;
     
     from = color(255, 230, 230);
     to = color(255, 10, 10);
@@ -55,7 +56,7 @@ class Screen {
              texture(vid);
              //tint(lerpColor(from, to, ratio));
              for(int i = 0; i < numPoints; i++) {
-               vertex(allPoints[i].x, allPoints[i].y, allPoints[i].z, texX[i%4], texY[i%4]); 
+               vertex(allPoints.get(i).x, allPoints.get(i).y, allPoints.get(i).z, texX[i%4], texY[i%4]); 
              }
            endShape();
            break;

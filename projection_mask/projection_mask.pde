@@ -12,6 +12,8 @@ Serial port;
 
 Movie vid;
 
+JSONArray values;
+
 int rawPulse, IBI, BPM, heart = 10; // IBI - time between heart beats
 boolean beat = false;  
 float windTemp, windVolts, windSpeed;
@@ -22,15 +24,19 @@ void setup() {
   fullScreen(P3D);
   pixelDensity(displayDensity());
   
-  port = new Serial(this, Serial.list()[5], 115200); 
-  port.clear(); // flush buffer
-  port.bufferUntil('\n'); 
+  //port = new Serial(this, Serial.list()[5], 115200); 
+  //port.clear(); // flush buffer
+  //port.bufferUntil('\n'); 
   
-  m = new Mask();
+  values = loadJSONArray("mapped_points.json");
+  m = new Mask(values);
+  
   frameRate(30);
   
   vid = new Movie(this, "5loop.mp4");
   vid.loop();
+  
+  
 }
 
 void draw() {
