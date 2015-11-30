@@ -32,9 +32,11 @@ class Screen {
     mode = 1; // vector of points given
   }
   
-  void animate(Movie vid, int heart, int breath) {
+  void animate(int numScreens, Movie vid, int heart, int breath) {
     int h = vid.height;
     int w = vid.width;
+    float w_alph = w/numScreens;
+    
     float scale = map(heart, 0, 20, 2, 1);
     float ratio = map(heart, 0, 20, 0.1, 1);
     
@@ -64,17 +66,20 @@ class Screen {
            }
        }
        
-       float difX = maxX - minX;
-       float difY = maxY - minY;
+       float d = w_alph*id;
+       float tW = maxX - minX;
+       float tH = h*tW/w_alph;
        
-       float[] texX = {0, w-difX, w-difX, 0};
-       float[] texY = {0,0, h-difY, h-difY};
+       
+       float[] texX = {d, d + (allPoints.get(1).x - minX), d + ( allPoints.get(2).x - minX) , d + (allPoints.get(3).x - minX)};
+       float[] texY = {(allPoints.get(0).y - minY), (allPoints.get(1).y - minY), (allPoints.get(2).y - minY), (allPoints.get(3).y - minY)};
      
        beginShape();
          texture(vid);
          tint(lerpColor(from, to, ratio));
          for(int i = 0; i < numPoints; i++) {
-           vertex(allPoints.get(i).x, allPoints.get(i).y, allPoints.get(i).z, texX[i%4], texY[i%4]); 
+           vertex(allPoints.get(i).x, allPoints.get(i).y, allPoints.get(i).z, texX[i%4], texY[i%4]);
+           println(id + "-" + i%4 + ". " + texX[i%4] + ", " + texY[i%4]);
          }
        endShape();
        break;

@@ -47,7 +47,13 @@ class Mask {
    
    void render(Movie vid, int heart, int breath) {
      for(Screen screen : screens) {
-       screen.animate(vid, heart, breath);
+       screen.animate(screens.size(), vid, heart, breath);
+     }
+   }
+   
+   void render(ArrayList<Movie> vid, int heart, int breath) {
+     for(int i = 0; i < screens.size(); i++) {
+       screens.get(i).animate(screens.size(), vid.get(i%(vid.size()-1)), heart, breath);
      }
    }
 }

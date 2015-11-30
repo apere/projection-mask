@@ -10,6 +10,7 @@ import processing.video.*;
 Serial port;   
 
 Movie vid;
+ArrayList<Movie> vids;
 
 JSONArray values;
 
@@ -33,8 +34,20 @@ void setup() {
   
   frameRate(30);
   
-  vid = new Movie(this, "5loop.mp4");
+  vid = new Movie(this, "birds/birds.mp4");
   vid.loop();
+  
+  //vids = new ArrayList<Movie>();
+  //vids.add((new Movie(this,"birds/birds_01.mp4")));
+  //vids.add((new Movie(this,"birds/birds_02.mp4")));
+  //vids.add((new Movie(this,"birds/birds_03.mp4")));
+  //vids.add((new Movie(this,"birds/birds_04.mp4")));
+  //vids.add((new Movie(this,"birds/birds_05.mp4")));
+  //vids.add((new Movie(this,"birds/birds_06.mp4")));
+  
+  //for(Movie video : vids) {
+  //   video.loop();
+  //}
   
   
 }
@@ -42,7 +55,6 @@ void setup() {
 void draw() {
   background(0);
   m.render(vid, heart, (int)windSpeed);
-   
   
   // text useful for debugging
   text("Framerate: " + int(frameRate),120,height-10);
