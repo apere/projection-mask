@@ -26,6 +26,7 @@ class Mask {
          temp.add(new PVector(point.getFloat("x"), point.getFloat("y"), point.getFloat("z")));
        }
        screens.add(new Screen(screenID, temp));
+       temp = new ArrayList<PVector>();
      }
    }
    
@@ -39,14 +40,14 @@ class Mask {
          temp.clear();
        }
        temp.add(points[i]);
+       println(points[i]);
      }
+     println("----");
    }
    
-   void render(Movie vid, int heart) {
-     int count = 1;
+   void render(Movie vid, int heart, int breath) {
      for(Screen screen : screens) {
-       screen.animate(count, vid, heart);
-       count++;
+       screen.animate(vid, heart, breath);
      }
    }
 }

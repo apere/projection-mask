@@ -18,6 +18,8 @@ String output;
 PrintWriter printer;
 int numShapes;
 
+int textX, textY;
+
 // Keep track of which screen we're drawing by having a list of 'screens'
 // click on shape to hide all others, click again to revert
 // modes: enter number of points, click for shapes, etc
@@ -31,7 +33,6 @@ void setup() {
   smooth(8);
   noStroke();
   
-  
   output = "";
   printer = createWriter("mapped_points.json"); 
   printer.println("[");
@@ -40,6 +41,9 @@ void setup() {
   numPoints = 0;
   maxPoints = 4;
   points = new ArrayList<PVector>();
+  
+  textSize(36);
+  textAlign(CENTER,BOTTOM);
 }
 
 
@@ -47,11 +51,22 @@ void draw() {
   background(0);
   if(numPoints == maxPoints) {
      fill(200, 200, 10);
+     textX = 0;
+     textY = 0;
      beginShape();
        for(int i = 0; i < numPoints; i++) {
           vertex(points.get(i).x, points.get(i).y); 
+          textX += points.get(i).x;
+          textY += points.get(i).y;
        }
      endShape();
+     
+     
+     fill(255,255, 255/(numShapes+1)+1);
+     textX = (textX/numPoints);
+     textY = (textY/numPoints);
+     
+     text(numShapes, textX, textY); 
   }
   
   fill(255);
@@ -70,7 +85,6 @@ void mousePressed() {
    int x = mouseX;
    int y = mouseY;
   
-   
    if (numPoints >= maxPoints) {
      if(numShapes > 0) {
        printer.print(",");

@@ -8,7 +8,7 @@ class Screen {
   PVector center;
   ArrayList<PVector> allPoints;
   int r, numPoints, mode, id;
-  color from, to;
+  color from, to, tint;
   
   Screen(PVector p, int nPoints) {
     r = 60;
@@ -22,7 +22,6 @@ class Screen {
   }
   
   Screen(int screenID,  ArrayList<PVector> points) {
-    r = 60;
     allPoints = points;
     numPoints = points.size();
     id = screenID;
@@ -33,11 +32,11 @@ class Screen {
     mode = 1; // vector of points given
   }
   
-  void animate(int count, Movie vid, int heart) {
+  void animate(Movie vid, int heart, int breath) {
+    int h = vid.height;
+    int w = vid.width;
     float scale = map(heart, 0, 20, 2, 1);
-    float ratio = map(heart, 0, 20, 0.1, 0.99);
-    float[] texX = {0, 4*r, 4*r, 0};
-    float[] texY = {0, 0, 4*r, 4*r};
+    float ratio = map(heart, 0, 20, 0.1, 1);
     
     switch(mode) {
       case(0):
@@ -51,14 +50,34 @@ class Screen {
         endShape();
         break;
        case(1):
-         beginShape();
-           texture(vid);
-           //tint(lerpColor(from, to, ratio));
-           for(int i = 0; i < numPoints; i++) {
-             vertex(allPoints.get(i).x, allPoints.get(i).y, allPoints.get(i).z, texX[i%4], texY[i%4]); 
+       float minX = allPoints.get(0).x, maxX = allPoints.get(0).y, minY = allPoints.get(0).y, maxY = allPoints.get(0).y;
+       for(int i = 0; i < numPoints; i++) {
+           if(allPoints.get(i).x < minX) {
+             minX = allPoints.get(i).x; 
+           } else if(allPoints.get(i).x > maxX) {
+             maxX = allPoints.get(i).x; 
            }
-         endShape();
-         break;
+           if(allPoints.get(i).y < minY) {
+             minY = allPoints.get(i).y; 
+           } else if(allPoints.get(i).y > maxY) {
+             maxY = allPoints.get(i).y; 
+           }
+       }
+       
+       float difX = maxX - minX;
+       float difY = maxY - minY;
+       
+       float[] texX = {0, w-difX, w-difX, 0};
+       float[] texY = {0,0, h-difY, h-difY};
+     
+       beginShape();
+         texture(vid);
+         tint(lerpColor(from, to, ratio));
+         for(int i = 0; i < numPoints; i++) {
+           vertex(allPoints.get(i).x, allPoints.get(i).y, allPoints.get(i).z, texX[i%4], texY[i%4]); 
+         }
+       endShape();
+       break;
     }
   }
 }

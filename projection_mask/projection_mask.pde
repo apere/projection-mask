@@ -41,7 +41,7 @@ void setup() {
 
 void draw() {
   background(0);
-  m.render(vid, heart);
+  m.render(vid, heart, (int)windSpeed);
    
   
   // text useful for debugging
